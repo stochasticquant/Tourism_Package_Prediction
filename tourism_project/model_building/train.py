@@ -80,7 +80,7 @@ with mlflow.start_run(run_name="pipeline-training"):
     best_model = grid_search.best_estimator_
 
     # Set classification threshold (same value as the Streamlit app)
-    classification_threshold = 0.45
+    classification_threshold = 0.50
     mlflow.log_param("classification_threshold", classification_threshold)
 
     # Make predictions on the training and test data
