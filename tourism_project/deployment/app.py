@@ -56,7 +56,7 @@ input_data = pd.DataFrame([{
 }])
 
 # Set the classification threshold
-classification_threshold = 0.50  # same threshold as train.py
+classification_threshold = 0.40  # same threshold as train.py
 
 # Predict button
 if st.button("Predict"):
