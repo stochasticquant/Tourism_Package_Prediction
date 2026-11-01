@@ -46,14 +46,16 @@ xgb_model = xgb.XGBClassifier(scale_pos_weight=class_weight, random_state=42)
 
 # Define hyperparameter grid
 param_grid = {
-    'xgbclassifier__n_estimators': [50, 100, 150],        # Number of boosting trees. More trees can improve performance but increase training time.
-    'xgbclassifier__max_depth': [3, 4, 5],                # Maximum depth of each tree. Higher values increase model complexity and risk of overfitting.
+    'xgbclassifier__n_estimators': [100, 200, 300],       # Number of boosting trees. More trees can improve performance but increase training time.
+    'xgbclassifier__max_depth': [4, 6, 8, 10],            # Maximum depth of each tree. Higher values increase model complexity and risk of overfitting.
     'xgbclassifier__colsample_bytree': [0.6, 0.8],        # Fraction of features sampled when building each tree.
     'xgbclassifier__colsample_bylevel': [0.6, 0.8],       # Fraction of features sampled at each tree level.
-    'xgbclassifier__learning_rate': [0.05, 0.1],          # Step size used during boosting. Smaller values may improve generalization but require more trees.
+    'xgbclassifier__learning_rate': [0.05, 0.1, 0.3],     # Step size used during boosting. Smaller values may improve generalization but require more trees.
     'xgbclassifier__reg_lambda': [0.5, 1.0],              # L2 regularization strength. Higher values help reduce overfitting.
 }
-# 3 x 3 x 2 x 2 x 2 x 2 = 144 combinations, each evaluated with 5-fold CV
+# 3 x 4 x 2 x 2 x 3 x 2 = 288 combinations, each evaluated with 5-fold CV.
+# The ranges were widened after a model comparison showed that the earlier, shallower
+# grid (depth 3-5, <=150 trees) under-fitted: the best depth (8) now lies inside the range.
 
 # Model pipeline
 model_pipeline = make_pipeline(preprocessor, xgb_model)
